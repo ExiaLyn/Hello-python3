@@ -1,0 +1,596 @@
+-# python3-studying
+I'm interested in data mining and mechine learning, so I'm about to starting with python and then doing some projects. Come on!
+
+#格式化方法   format()
+age = 20
+name = 'Swaroop'
+
+print('{0} was {1} years old when he wrote this book'.format(name,age))
+print('Why is {0} playing with that python'.format(name))      #占位，按顺序来格式化
+
+
+#其他形式
+print('{0:.3f}'.format(1.0/3))    #保留三位小数
+print('{0：_^11}'.format('hello'))
+
+#print function always end with an unvisable '/n', so if we want to avoid this situation, we can use the key words 'end'
+print('a', end =' ')
+print('b', end =' ')    #the result would be "a b", if end='', the output would be 'ab'
+
+###  Escape sequence  ###  using the symbol '\'
+ print('\'What\'s your name?\'')  #output--> 'what's your name?'
+#If there is a '\' in a string, this means the string would be continue in next line without adding a new line
+
+#Identifiers,  the first symbol must be a letter or '_', and must consist with digits, letters and '_'
+#Physical Line, a line that you can read          #Logical Line, a sentence in python programming
+
+#Expressions and Operators
+## +-*/
+print('la'*3)   #'lalala'
+print(3**2)     #9
+print(4/3)      #1.3333333333333333
+print(4//3)     #1
+## logical operators   & | ^  ~
+
+length = 5
+breadth = 2
+area = length * breadth
+print('Area is', area)
+print('Perimeter is', 2 * (length + breadth))    # area is 10      #Perimeter is 14
+
+###Control Stream     if, for, while
+number = 23
+guess = int(input('Enter an integer:'))
+
+if guess == number:
+  #true, new code block
+  print('Conguratulations, you guessed it.')
+  print('(but you will not win any prize)')
+elif guess < number:
+  #false, option 1 code block
+  print('No, it\'s a little higher than that')
+else:
+  #another option
+  print('No, it\'s a little lower than that')
+print('Done')
+
+
+number = 23
+running = True
+
+while running:
+  guess = int(input('Enter an integer :'))
+
+  if guess == number:
+      print('Yes, you guessed it.')
+      #change the condition value
+      running = False
+  elif guess < number:
+      print('It\'s a little higher than that.')
+  else :
+      print('It\'s a little lower than that.')
+else:
+    print('The loop is over.')
+
+print('Done')
+
+#for loop
+for i in range(1,5):  #1-5, 5 is not included   # range(a,b,c), a is the first number, b is the last number(not included), c is the step
+    print(i)
+else:
+    print('The for loop is over')
+
+#break
+while True:
+    s = input('Enter something:')
+    if s == 'quit':
+        break
+    print('Length of the string is', len(s))
+print('Done')
+
+#continue   jump over one loop, jump to next loop directly
+while True:
+    s = input('Enter something:')
+    if s == 'quit':
+        break
+    if len(s) < 3:
+        print('Too small')
+        continue
+    print('Input is of sufficient length')
+
+#### Functions     Define some code blocks with certain name, then it can be used at anywhere proper in your code by Calling the function
+# Key Words: def
+def say_hello():
+    print('hello world')
+
+say_hello()
+
+#function with parameters    Parameters in function are called Local Paras, they just work in the function defination block
+def print_max(a,b):
+    if a > b:
+        print(a,'is maximun')
+    elif a == b:
+        print(a,'is equal to',b)
+    else:
+        print(b,'is maximum')
+
+print_max(3,4)
+x,y = 5,7
+print_max(x,y)
+
+# Local Paras
+x = 50
+
+def func(x):
+    print('x is', x)
+    x = 2
+    print('Changed local x to', x)
+
+func(x)
+print('x is still', x)
+
+# global  Define a variable with a constant value in global, the value would not change until it is assigned with other value
+x = 50
+
+def func():
+    global x
+
+    print('x is', x)
+    x = 2
+    print('Change global x to', x)
+
+func()
+print('Value of x is', x)
+
+# Default value      define the para with a default value in function defination directly by using assignment symbol, =
+def say(message, times = 1):
+    print(message * times)
+
+say('hello')
+say('world', 5)        ### Notice: The paras with default value must located behind the paras those without default Value
+
+# Keyword paras   In this way, we can assign a default value to some paras without considering their location
+def func(a, b=5, c=10):
+    print('a is',a, 'and b is', b, 'and c is', c)
+
+func(3,7)
+func(25,c=24)
+func(c=50,a=100)
+
+# Variable Paras   The number of paras in function is variable, using *
+def total(a=5, *numbers, **phonebook):   #Paras with * will be collected in a Tuple, paras with ** will be collected in a Dictionary
+    print('a', a)
+
+    for single_item in numbers:
+        print('single_item', single_item)
+
+    for first_part, second_part in phonebook.items():
+        print(first_part, second_part)
+
+print(total(10,1,2,3,Jack=1122,Jhon=2212,Inge=2123))   #There would be a 'None' at the end of the output, why?
+
+### return   Return a value from function, which means interrupting the function. If there was no responsing value, it would return 'None'.
+def maximum(x,y):
+    if x > y:
+        return x
+    elif x == y:
+        return 'The numbers are equal'
+    else:
+        return y
+
+print(maximum(2,3))
+## Every function contains a 'None' at the tail of it, unless you define the return value. If you don't want to use return, you can use keyword 'pass'
+def some_function():
+    pass  ## 'pass' is used to define a code block with nothing
+
+
+#### DocStrings     documentation strings
+def print_max(x,y):
+    '''Print the maximum of two numbers.  The two numbers must be integers.'''
+    x = int(x)
+    y = int(y)
+
+    if x > y:
+        print(x,'is maximum')
+    else:
+        print(y,'is maximum')
+
+print_max(3,5)
+print(print_max.__doc__)
+
+###  Modules    A file named with .py
+import sys
+
+print('The command line arguments are:')
+for i in sys.argv:
+    print(i)
+
+print('\n\nThe PYTHONPATH is', sys.path,'\n')
+#############################################################################################
+#########   Solve Questions
+##  Write a application to backup some important files
+#implementation
+import os
+import time
+
+#find the location of files
+source = ['"D:\\study"']
+
+#save the file in pointed catalog
+target_dir = 'D:\\backup'
+
+#save file as ZIP, named with date and time
+target = target_dir + os.sep + time.strftime('%Y%m%d%H%M%S') + '.zip'
+
+# if target dir is not exist, creat the path and fileholder
+if not os.path.exists(target_dir):
+    os.mkdir(target_dir)
+
+zip_command = 'zip -r {0} {1}'.format(target,' '.join(source))
+
+# running
+print('Zip command is:')
+print(zip_command)
+print('Running:')
+if os.system(zip_command) == 0:
+    print('Successful backup to',target)
+else:
+    print('Backup Failed')
+
+
+####  Software develop poccession: What.  How.   Do it.    Test.    Use.    Maitain.
+
+##Class and Object are two parts of Object-Oriented Programming
+# Class is to creat a new type, Object is the instance of Class
+# Variables belongs to Object or Class, called Feild.
+# Functions belongs to Class, called Method.         Attribute of Class
+
+## self
+class Person:
+    def say_hi(self):
+        print('Hello world')
+
+p = Person()
+p.say_hi()
+
+##  __init__ Method
+##  __init__ will operate immediatelly when the object of class be instantiated.    initialization
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def say_hi(self):
+        print('Hello, my name is',self.name)
+
+p = Person('Swaroop')
+p.say_hi()
+
+### Class Variable: A shared variable, can be accessed by all shili of the Class
+### Object Variable: Belongs to every individual object.
+# coding=UTF-8
+
+class Robot:
+    """A robot with a certain name"""
+    population = 0
+
+    def __init__(self, name):
+        """initailize data"""
+        self.name = name
+        print("(Initializing{})".format(self.name))
+
+        # when somebody is created, the population would be increase
+        Robot.population += 1
+
+    def die(self):
+        """I'm dead"""
+        print("{}is being destroyed!".format(self.name))
+
+        Robot.population -=1
+
+        if Robot.population == 0:
+            print("{} was the last one.".format(self.name))
+        else:
+            print("There are still {:d} robots working.".format(Robot.population))
+
+    def say_hi(self):
+        """ The greeting comes from robot. """
+        print("Greetings, my masters call me {}".format(self.name))
+
+    @classmethod
+    def how_many(cls):
+       """print the population"""
+       print("We have {:d} robots.".format(cls.population))
+
+droid1 = Robot("R2-D2")
+droid1.say_hi()
+Robot.how_many()
+
+droid2 = Robot("C-3PO")
+droid2.say_hi()
+Robot.how_many()
+
+print("\nRobots can do some work here.\n")
+
+print("Robots have finished their work. So let's destroy them.")
+droid1.die()
+droid2.die()
+
+Robot.how_many()
+
+### Inheritance   One of advantages of codeing to object is Reuse, it is applied by Inheritance
+
+# coding=UTF-8
+
+class SchoolMember:
+    """behalf of the memers in school"""
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        print('(Initialized SchoolMember:{})'.format(self.name))
+
+    def tell(self):
+        """Tell me about my details"""
+        print('Name:"{}"  Age:"{}"'.format(self.name, self.age), end=" " )
+
+class Teacher(SchoolMember):
+   """Behalf a teacher"""
+   def __init__(self, name, age, salary):
+       SchoolMember.__init__(self, name, age)
+       self.salary = salary
+       print('(Initialized Teacher:{})'.format(self.name))
+
+   def tell(self):
+       SchoolMember.tell(self)
+       print('Salary:"{:d}"'.format(self.salary))
+
+
+class Student(SchoolMember):
+    def __init__(self, name, age, marks):
+        SchoolMember.__init__(self, name, age)
+        self.marks = marks
+        print('(Initialized Student:{})'.format(self.name))
+
+    def tell(self):
+        SchoolMember.tell(self)
+        print('Marks: "{:d}"'.format(self.marks))
+
+
+t = Teacher('Mrs. Shrividya', 40, 30000)
+s = Student('Swaroop', 25, 75)
+
+print()
+
+members = [t, s]
+for member in members:
+    member.tell()
+
+
+####### Input and output
+## input
+def reverse(text):
+    return text[::-1]
+
+def is_palindrome(text):
+    return text == reverse(text)
+
+something = input("Enter text:")
+if is_palindrome(something):
+    print("Yes, it is a palindrome")
+else:
+    print("No, it is not a palindrome")
+
+### homework
+Using split
+def reverse(text):
+    return text[::-1]
+
+##Rise to vote, sir
+
+def is_palindrome(text):
+    ##first make all letters in lower
+    text = text.lower()
+    ## ignore symbols and space
+    forbidden = (',','.','!',' ',)
+
+    for key in forbidden:
+        a = text.split(key)
+
+    str1 = ''.join(a)
+
+    return str1
+
+
+something = input("Enter text:")
+if is_palindrome(something):
+    print("Yes, it is a palindrome")
+else:
+    print("No, it is not a palindrome")
+
+########## File
+##   create a objiect belongs to 'file' class, and ues the method 'read', 'readline', 'write' and etc properly to read out or write in these objects.
+poem = '''\
+Programming is fun
+When the work is done
+if you wanna make your work also fun:
+use Python!
+'''
+
+# open the file to edit
+f = open('poem.txt', 'w')
+# write in file
+f.write(poem)
+f.close()   ## close the file
+
+f = open('poem.txt')
+while True:
+    line = f.readline()
+    if len(line) == 0:
+        break
+
+    print(line, end='')
+
+f.close()
+
+##### Pikcle     A standard module in python
+import pickle
+
+# The name of the file where we will store the object
+shoplistfile = 'shoplist.data'
+# the list of things to buy
+shoplist = ['apple', 'mango', 'carrot']
+
+# write to the file
+f = open(shoplistfile, 'wb')
+# dump the object to a file
+pickle.dump(shoplist, f)
+f.close()
+
+# destory the shoplist Variable
+del shoplist
+
+# read back from the storage
+f = open(shoplistfile, 'rb')
+# load the object from the file
+storedlist = pickle.load(f)
+print(storedlist)
+
+#### unicode
+
+# encoding=utf-8
+import io
+
+f = io.open("abc.txt", "wt", encoding="utf-8")
+f.write(u"Imagine non-English language here")
+f.close()
+
+text = io.open("abc.txt", encoding="utf-8").read()
+print(text)
+
+###  Exception
+## Error
+## ues 'try' to read the input
+try:
+    text = input('Enter something -->')
+except EOFError:
+    print('Why did you do a EOF on me?')
+except KeyboardInterrupt:
+    print('You cancelled the operation.')
+else:
+    print('You entered {}'.format(text))
+
+### Thrown the Exception
+
+#encoding=utf-8
+
+ class ShortInputException(Exception):
+     "an user defined exception"
+     def __init__(self, length, atleast):
+         Exception.__init___(self)
+         self.length = length
+         self.atleast = atleast
+
+ try:
+     text = input('Enter something-->')
+     if len(text) < 3:
+         raise ShortInputException(len(text), 3)
+
+ except EOFError：
+     print('Why you do an EOF on me')
+ except ShortInputException as ex:
+     print(('ShortInputException: The input was' +
+          '{0} long, excepted at least {1}').format(ex.length, ex.atleast))
+
+ else:
+     print('No exception was raised.')
+
+
+##  try ... finally
+
+import sys
+import time
+
+f = None
+try:
+    f = open("poem.txt")
+
+    while True:
+        line = f.readline()
+        if len(line) == 0:
+            break
+        print(line, end='')
+        sys.stout.flush()
+        print("Press ctrl+c now")
+        time.sleep(2)
+
+except IOError:
+    print("Could not find file poem.txt")
+except KeyboardInterrupt:
+    print("!! You cancelled the reading from the file")
+finally:
+    if f:
+        f.close()
+    print("(cleaning up: Close the file)")
+
+## with
+
+with open("poem.txt") as f:
+    for line in f:
+        print(line, end='')
+
+###############  Python standard library
+### sys module
+import sys
+sys.version_info
+
+### diary module
+import os
+import platform
+import logging
+
+if platform.platform().startswith('Windows'):
+    logging_file = os.path.join(os.getenv('HOMEDRIVE'),os.getenv('HOMEPATH'),'test.log')
+
+else:
+    logging_file = os.path.join(os.getenv('HOME'),'test.log')
+
+print("Logging to", logging_file)
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s : %(levelname)s : %(message)s',
+    filename = logging_file,
+    filemode = 'w'
+)
+
+logging.debug("start of the program")
+logging.info("Doing something")
+logging.warning("Dying now")
+
+###  MORE
+## transfer tuple
+def get_error_details():
+    return(2,'details')
+
+errnum, errstr = get_error_details()
+
+## fast exchange
+a, b = 5, 8
+a,b = b, a
+
+## lambda grid
+points = [{'x': 2, 'y': 3}, {'x': 4, 'y': 1}]
+
+points.sort(key=lambda i:i['y'])
+print(points)
+
+##### List comprehension
+listone = [2, 3, 4]
+listtwo = [2*i for i in listone if i > 2]
+print(listtwo)
+
+### accept tuple and dictionary in function
+def powersum(power, *args):
+    total = 0
+    for i in args:
+        total += pow(i, power)
+    return total
